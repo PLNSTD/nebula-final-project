@@ -20,7 +20,7 @@ def parse_country_largest_cities(country = None):
     for row in table_rows:
         city = row.find('th').get_text()
         population = row.find('td').get_text()
-        aqi = faiq.parse_city_air_quality(city)
+        aqi = faiq.fetch_city_air_quality(city)
         air_quality_indexes.append(aqi)
         cities.append(city)
         cities_population.append(population)
@@ -28,5 +28,5 @@ def parse_country_largest_cities(country = None):
     return (cities, cities_population, air_quality_indexes)
 
 # GOOD 
-cities_info = parse_country_largest_cities('italy')
+cities_info = parse_country_largest_cities('united-states')
 print(cities_info)

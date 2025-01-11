@@ -1,3 +1,4 @@
 /env
 src/__pycache__
 OpenWeatherAPIKey.py
+db_credentials.txt
