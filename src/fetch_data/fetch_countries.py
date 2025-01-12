@@ -3,7 +3,7 @@ from src.fetch_data import fetch_webpage as fw
 
 common_url = 'https://worldpopulationreview.com/continents/'
 
-def fetch_continent_countries(continent = None):
+def fetch__countries_by_continent(continent = None):
     if not continent:
         raise Exception('\n\tNo continent provided to fetch data from\n')
     

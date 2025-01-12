@@ -22,7 +22,3 @@ def fetch_country_cities(country = None):
         cities_population.append(population)
     
     return (cities, cities_population)
-
-# GOOD 
-cities_info = fetch_country_cities('switzerland')
-print(len(cities_info[0]))

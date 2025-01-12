@@ -1,4 +1,5 @@
 from src.database_psql.db_interface import connect as db
+from flask import jsonify
 
 def insert(name, population, world_population, density_per_km):
     conn = db.get_connection()
@@ -10,4 +11,12 @@ def insert(name, population, world_population, density_per_km):
     cur.close()
     conn.close()
 
-# insert_continent('Africa','0','0','0')
+def get_all():
+    conn = db.get_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM continents;')
+    continents = cur.fetchall()
+    cur.close()
+    conn.close()
+    
+    return continents

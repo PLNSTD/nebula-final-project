@@ -20,10 +20,7 @@ def get_connection():
             password=password,
             host="ep-patient-dream-a4vag2b0.us-east-1.aws.neon.tech"
         )
-        print("Connected to the database successfully")
+        # print("Connected to the database successfully")
         return connection
     except Exception as e:
         print(f"Error connecting to database: {e}")
-
-# setup_continents()
-# add_continent('Oceania', 46088704, 0.58, 5)

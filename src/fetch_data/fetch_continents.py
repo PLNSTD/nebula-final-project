@@ -1,4 +1,4 @@
-import fetch_data.fetch_webpage as fw
+from src.fetch_data import fetch_webpage as fw
 from bs4 import BeautifulSoup
 
 common_url = 'https://worldpopulationreview.com/continents'
@@ -24,6 +24,3 @@ def fetch_continents_from_page():
         })
     
     return continents
-        
-continents = fetch_continents_from_page()
-print(continents)
