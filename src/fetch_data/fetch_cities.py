@@ -1,11 +1,9 @@
 from bs4 import BeautifulSoup
-import fetch_data.fetch_webpage as fw
-import temp_ideas.fetch_air_quality as faiq
-import db_management.psql.db_interface as db
+from src.fetch_data import fetch_webpage as fw
 
-common_url = 'https://worldpopulationreview.com/countries/'
+common_url = 'https://worldpopulationreview.com/cities/'
 
-def fetch_country_largest_cities(country = None):
+def fetch_country_cities(country = None):
     if not country:
         raise Exception('\n\tNo country provided to parse data from\n')
 
@@ -16,18 +14,15 @@ def fetch_country_largest_cities(country = None):
 
     cities = []
     cities_population = []
-    air_quality_indexes = []
 
     for row in table_rows:
         city = row.find('th').get_text()
         population = row.find('td').get_text()
-        aqi = faiq.fetch_city_air_quality(city)
-        air_quality_indexes.append(aqi)
         cities.append(city)
         cities_population.append(population)
     
-    return (cities, cities_population, air_quality_indexes)
+    return (cities, cities_population)
 
 # GOOD 
-cities_info = fetch_country_largest_cities('united-states')
-print(cities_info)
+cities_info = fetch_country_cities('switzerland')
+print(len(cities_info[0]))

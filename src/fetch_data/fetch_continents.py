@@ -24,6 +24,5 @@ def fetch_continents_from_page():
     
     return continents
         
-
 continents = fetch_continents_from_page()
 print(continents)
