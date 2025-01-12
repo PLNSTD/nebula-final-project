@@ -1,5 +1,5 @@
-import fetch_webpage as fw
-import OpenWeatherAPIKey as api_key
+import fetch_data.fetch_webpage as fw
+import temp_ideas.OpenWeatherAPIKey as api_key
 
 
 def fetch_city_air_quality(city):
