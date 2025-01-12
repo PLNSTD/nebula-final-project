@@ -1,5 +1,6 @@
 import fetch_data.fetch_webpage as fw
 from bs4 import BeautifulSoup
+
 common_url = 'https://worldpopulationreview.com/continents'
 
 def fetch_continents_from_page():
@@ -19,7 +20,7 @@ def fetch_continents_from_page():
             'name': name,
             'population': population,
             'world_population': world_population,
-            'density_per_km': density_per_km
+            'density_per_km2': density_per_km
         })
     
     return continents

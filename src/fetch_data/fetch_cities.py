@@ -5,7 +5,7 @@ common_url = 'https://worldpopulationreview.com/cities/'
 
 def fetch_country_cities(country = None):
     if not country:
-        raise Exception('\n\tNo country provided to parse data from\n')
+        raise Exception('\n\tNo country provided to fetch data from\n')
 
     html_content = fw.fetch_page_content(common_url + country).text
     soup = BeautifulSoup(html_content, 'html.parser')

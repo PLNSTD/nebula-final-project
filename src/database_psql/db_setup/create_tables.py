@@ -1,10 +1,10 @@
-import database_psql.db_interface.connect as db
+import src.database_psql.db_interface.connect as db
 
 def setup_continents():
     conn = db.get_connection()
     cursor = conn.cursor()
     query = """
-    CREATE TABLE continents IF NOT EXISTS(
+    CREATE TABLE IF NOT EXISTS continents (
     name VARCHAR(50) PRIMARY KEY,
     population INTEGER,
     world_population REAL,
@@ -20,7 +20,7 @@ def setup_countries():
     conn = db.get_connection()
     cursor = conn.cursor()
     query = """
-    CREATE TABLE countries IF NOT EXISTS(
+    CREATE TABLE IF NOT EXISTS countries(
     name VARCHAR(50) PRIMARY KEY,
     continent VARCHAR(50) REFERENCES continents (name),
     population INTEGER,
@@ -36,10 +36,10 @@ def setup_cities():
     conn = db.get_connection()
     cursor = conn.cursor()
     query = """
-    CREATE TABLE cities IF NOT EXISTS(
+    CREATE TABLE IF NOT EXISTS cities(
     name VARCHAR(50) PRIMARY KEY,
     country VARCHAR(50) REFERENCES countries (name),
-    population INTEGER,
+    population INTEGER
     );
     """
     cursor.execute(query)

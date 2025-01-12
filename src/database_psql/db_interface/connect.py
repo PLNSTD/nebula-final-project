@@ -25,23 +25,5 @@ def get_connection():
     except Exception as e:
         print(f"Error connecting to database: {e}")
 
-def add_continent(name, population, world_population, density_per_km):
-    conn = get_connection()
-    cur = conn.cursor()
-    query = """
-    INSERT INTO continents (name, population, world_population, density_per_km) VALUES(%s, %s, %s, %s);"""
-    cur.execute(query, (name, population, world_population, density_per_km))
-    conn.commit()
-    cur.close()
-    conn.close()
-
-# TODO
-def add_country():
-    pass
-
-# TODO
-def add_city():
-    pass
-
 # setup_continents()
 # add_continent('Oceania', 46088704, 0.58, 5)
