@@ -11,3 +11,13 @@ def insert(name, country, population):
     conn.close()
 
     print('Inserted: ' + name)
+
+def get_all():
+    conn = db.get_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM cities;')
+    cities = cur.fetchall()
+    cur.close()
+    conn.close()
+    
+    return cities

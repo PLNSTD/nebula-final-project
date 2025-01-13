@@ -5,6 +5,8 @@ from src.database_psql.db_setup import create_tables
 from src.database_psql.data_operations import continents as continents_table
 from src.database_psql.data_operations import countries as countries_table
 from src.database_psql.data_operations import cities as cities_table
+from src.database_psql.data_operations import historical_population as historical_pop_table
+from src.database_psql.data_operations import projections_population as projections_pop_table
 import os
 from src.fetch_data.fetch_country_population import fetch_population_data as fetch_pop
 
@@ -129,6 +131,8 @@ def fill_db_with_cities():
             return
 
 def fill_db_with_country_pop_projections():
+    create_tables.setup_historical_population()
+    create_tables.setup_projections_population()
     countries = countries_table.get_all()
     
     if countries is None:
@@ -137,6 +141,8 @@ def fill_db_with_country_pop_projections():
     cntCountries = 0
 
     for country in countries:
+        if cntCountries == 1:
+            break
         # Clear the screen
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f'Countries: {cntCountries}/{len(countries)}')
@@ -152,23 +158,41 @@ def fill_db_with_country_pop_projections():
 
         for year_pop_history in population_projection_data['historical_population']:
             year = int(year_pop_history['population_year'])
-            city_population = int(year_pop_history['population'].replace(',', ''))
+            country_population = int(year_pop_history['population'].replace(',', ''))
             density_km2 = year_pop_history['density_km2'].replace(',','.')
             density_km2 = float(density_km2)
             population_rank = int(year_pop_history['population_rank'])
             density_rank = int(year_pop_history['density_rank'])
 
-            print(year, city_population, density_km2, population_rank, density_rank)
+            historical_pop_table.insert(
+                original_country_name,
+                year,
+                country_population,
+                density_km2,
+                population_rank,
+                density_rank
+            )
+
+            print(year, country_population, density_km2, population_rank, density_rank)
 
         for year_pop_history in population_projection_data['projection_population']:
             year = int(year_pop_history['population_year'])
-            city_population = int(year_pop_history['population'].replace(',', ''))
+            country_population = int(year_pop_history['population'].replace(',', ''))
             density_km2 = year_pop_history['density_km2'].replace(',','.')
             density_km2 = float(density_km2)
             population_rank = int(year_pop_history['population_rank'])
             density_rank = int(year_pop_history['density_rank'])
 
-            print(year, city_population, density_km2, population_rank, density_rank)
+            projections_pop_table.insert(
+                original_country_name,
+                year,
+                country_population,
+                density_km2,
+                population_rank,
+                density_rank
+            )
+
+            print(year, country_population, density_km2, population_rank, density_rank)
         
         cntCountries += 1
 

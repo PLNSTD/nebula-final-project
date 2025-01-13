@@ -47,10 +47,40 @@ def setup_cities():
     cursor.close()
     conn.close()
 
-# TODO - And create file
 def setup_historical_population():
-    pass
+    conn = db.get_connection()
+    cursor = conn.cursor()
+    query = """
+    CREATE TABLE IF NOT EXISTS historical_population(
+    country VARCHAR(50) REFERENCES countries (name),
+    population_year INT,
+    population BIGINT,
+    density_per_km2 REAL,
+    population_rank INT,
+    density_rank INT,
+    CONSTRAINT pk PRIMARY KEY(country, population_year)
+    );
+    """
+    cursor.execute(query)
+    conn.commit()
+    cursor.close()
+    conn.close()
 
-# TODO - And create file
-def setup_projection_population():
-    pass
+def setup_projections_population():
+    conn = db.get_connection()
+    cursor = conn.cursor()
+    query = """
+    CREATE TABLE IF NOT EXISTS projections_population(
+    country VARCHAR(50) REFERENCES countries (name),
+    population_year INT,
+    population BIGINT,
+    density_per_km2 REAL,
+    population_rank INT,
+    density_rank INT,
+    CONSTRAINT pk_project PRIMARY KEY(country, population_year)
+    );
+    """
+    cursor.execute(query)
+    conn.commit()
+    cursor.close()
+    conn.close()

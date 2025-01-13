@@ -32,16 +32,16 @@ def fetch_population_data(country = None):
             })
             print(pop_year, population, density_km2, population_rank, density_rank)
         
-        projection_population = []
-        projection_population_table = data_tables[2]
-        for row in projection_population_table:
+        projections_population = []
+        projections_population_table = data_tables[2]
+        for row in projections_population_table:
             pop_year = row.find('th').text
             row_info = row.find_all('td')
             population = row_info[0].text
             density_km2 = row_info[2].text
             population_rank = row_info[3].text
             density_rank = row_info[4].text
-            projection_population.append({
+            projections_population.append({
                 'population_year': pop_year,
                 'population': population,
                 'density_km2': density_km2,
@@ -52,7 +52,7 @@ def fetch_population_data(country = None):
         
         return {
             'historical_population': historical_population,
-            'projection_population': projection_population
+            'projection_population': projections_population
         }
 
     except Exception as e:
