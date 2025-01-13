@@ -46,3 +46,11 @@ def setup_cities():
     conn.commit()
     cursor.close()
     conn.close()
+
+# TODO - And create file
+def setup_historical_population():
+    pass
+
+# TODO - And create file
+def setup_projection_population():
+    pass

@@ -6,6 +6,7 @@ from src.database_psql.data_operations import continents as continents_table
 from src.database_psql.data_operations import countries as countries_table
 from src.database_psql.data_operations import cities as cities_table
 import os
+from src.fetch_data.fetch_country_population import fetch_population_data as fetch_pop
 
 def fill_db_with_continents():
     create_tables.setup_continents()
@@ -99,16 +100,10 @@ def fill_db_with_cities():
         cities = fetch_cities(country_name)
 
         if cities is None:
-            print('Im in main')
             cntCountries += 1
             continue
         
         cntCities = 0
-        '''if not flag and 'macau' or not flag and 'niue' not in cities:
-            cntCountries += 1
-            continue
-        else:
-            flag = True'''
         for city in cities:
             if cntCities == 10:
                 break
@@ -116,13 +111,7 @@ def fill_db_with_cities():
             os.system('cls' if os.name == 'nt' else 'clear')
             print(country)
             print(f'Cities: {cntCities}/{len(cities)}')
-            print(flag)
             city_name = city['name']
-            '''if flag == False and city_name is not 'macau':
-                cntCities += 1
-                continue
-            else:
-                flag = True'''
             city_population = int(city['population'].replace(',', ''))
 
             cities_table.insert(
@@ -139,6 +128,51 @@ def fill_db_with_cities():
         if x == 0:
             return
 
+def fill_db_with_country_pop_projections():
+    countries = countries_table.get_all()
+    
+    if countries is None:
+        return
+    
+    cntCountries = 0
+
+    for country in countries:
+        # Clear the screen
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f'Countries: {cntCountries}/{len(countries)}')
+        original_country_name = country[0]
+        country_name = original_country_name.lower()
+        country_name = country_name.replace(' ','-')
+
+        population_projection_data = fetch_pop(country_name)
+
+        if population_projection_data is None:
+            cntCountries += 1
+            continue
+
+        for year_pop_history in population_projection_data['historical_population']:
+            year = int(year_pop_history['population_year'])
+            city_population = int(year_pop_history['population'].replace(',', ''))
+            density_km2 = year_pop_history['density_km2'].replace(',','.')
+            density_km2 = float(density_km2)
+            population_rank = int(year_pop_history['population_rank'])
+            density_rank = int(year_pop_history['density_rank'])
+
+            print(year, city_population, density_km2, population_rank, density_rank)
+
+        for year_pop_history in population_projection_data['projection_population']:
+            year = int(year_pop_history['population_year'])
+            city_population = int(year_pop_history['population'].replace(',', ''))
+            density_km2 = year_pop_history['density_km2'].replace(',','.')
+            density_km2 = float(density_km2)
+            population_rank = int(year_pop_history['population_rank'])
+            density_rank = int(year_pop_history['density_rank'])
+
+            print(year, city_population, density_km2, population_rank, density_rank)
+        
+        cntCountries += 1
+
 # fill_db_with_continents()
 # fill_db_with_countries()
 # fill_db_with_cities()
+fill_db_with_country_pop_projections()
