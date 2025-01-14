@@ -19,3 +19,13 @@ def get_all():
     conn.close()
     
     return countries
+
+def get_by_name(country):
+    conn = db.get_connection()
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM countries where name = '{country}';")
+    countries = cur.fetchall()
+    cur.close()
+    conn.close()
+    
+    return countries
