@@ -1,6 +1,7 @@
 from src.fetch_data.fetch_continents import fetch_continents_from_page as fetch_continents
 from src.fetch_data.fetch_countries import fetch__countries_by_continent as fetch_countries
 from src.fetch_data.fetch_cities import fetch_country_cities as fetch_cities
+from src.fetch_data.fetch_country_population import fetch_population_data as fetch_pop
 from src.database_psql.db_setup import create_tables
 from src.database_psql.data_operations import continents as continents_table
 from src.database_psql.data_operations import countries as countries_table
@@ -8,7 +9,8 @@ from src.database_psql.data_operations import cities as cities_table
 from src.database_psql.data_operations import historical_population as historical_pop_table
 from src.database_psql.data_operations import projections_population as projections_pop_table
 import os
-from src.fetch_data.fetch_country_population import fetch_population_data as fetch_pop
+from src.data_visualization import plot_population_trends as ppt
+import pandas as pd
 
 def fill_db_with_continents():
     create_tables.setup_continents()
@@ -199,4 +201,18 @@ def fill_db_with_country_pop_projections():
 # fill_db_with_continents()
 # fill_db_with_countries()
 # fill_db_with_cities()
-fill_db_with_country_pop_projections()
+# fill_db_with_country_pop_projections() TODO
+# data = projections_pop_table.get_by_country('India')
+# df = pd.DataFrame(data)
+projections_df = projections_pop_table.get_by_country_to_dataframe('India')
+historical_df = historical_pop_table.get_by_country_to_dataframe('India')
+
+df_combined = pd.concat([
+    projections_df[['population_year', 'population']],
+    historical_df[['population_year', 'population']]
+], ignore_index=True)
+
+df_combined = df_combined.drop_duplicates(subset='population_year', keep='first').sort_values(by='population_year')
+
+print(df_combined)
+ppt(df_combined)
