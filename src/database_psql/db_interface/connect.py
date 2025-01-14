@@ -1,24 +1,24 @@
+from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
 
-# Get the directory of the current script
-current_dir = os.path.dirname(os.path.abspath(__file__))
+# Load environment variables from the .env file
+load_dotenv()
 
-# construct the file path relative to the script's location
-credentials_path = os.path.join(current_dir, './db_credentials.txt')
+# Access the variables from the .env file
+dbname = os.getenv('DB_NAME')
+user = os.getenv('DB_USER')
+password = os.getenv('DB_PASSWORD')
+host = os.getenv('DB_HOST')
 
 def get_connection():
     try:
-        # Get hidden db password
-        with open(credentials_path, 'r') as credential_file:
-            password = credential_file.read()
-        
         connection = psycopg2.connect(
-            dbname="nebuladb",
-            user="nebuladb_owner",
+            dbname=dbname,
+            user=user,
             password=password,
-            host="ep-patient-dream-a4vag2b0.us-east-1.aws.neon.tech"
+            host=host
         )
         # print("Connected to the database successfully")
         return connection

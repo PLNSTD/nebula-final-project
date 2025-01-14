@@ -143,8 +143,6 @@ def fill_db_with_country_pop_projections():
     cntCountries = 0
 
     for country in countries:
-        if cntCountries == 1:
-            break
         # Clear the screen
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f'Countries: {cntCountries}/{len(countries)}')
@@ -175,7 +173,7 @@ def fill_db_with_country_pop_projections():
                 density_rank
             )
 
-            print(year, country_population, density_km2, population_rank, density_rank)
+            # print(year, country_population, density_km2, population_rank, density_rank)
 
         for year_pop_history in population_projection_data['projection_population']:
             year = int(year_pop_history['population_year'])
@@ -194,18 +192,18 @@ def fill_db_with_country_pop_projections():
                 density_rank
             )
 
-            print(year, country_population, density_km2, population_rank, density_rank)
+            # print(year, country_population, density_km2, population_rank, density_rank)
         
         cntCountries += 1
 
 # fill_db_with_continents()
 # fill_db_with_countries()
 # fill_db_with_cities()
-# fill_db_with_country_pop_projections() TODO
+# fill_db_with_country_pop_projections() # TODO
 # data = projections_pop_table.get_by_country('India')
 # df = pd.DataFrame(data)
-projections_df = projections_pop_table.get_by_country_to_dataframe('India')
-historical_df = historical_pop_table.get_by_country_to_dataframe('India')
+projections_df = projections_pop_table.get_by_country_to_dataframe('Italy')
+historical_df = historical_pop_table.get_by_country_to_dataframe('Italy')
 
 df_combined = pd.concat([
     projections_df[['population_year', 'population']],

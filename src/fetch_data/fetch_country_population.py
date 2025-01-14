@@ -30,7 +30,7 @@ def fetch_population_data(country = None):
                 'population_rank': population_rank,
                 'density_rank': density_rank
             })
-            print(pop_year, population, density_km2, population_rank, density_rank)
+            # print(pop_year, population, density_km2, population_rank, density_rank)
         
         projections_population = []
         projections_population_table = data_tables[2]
@@ -48,7 +48,7 @@ def fetch_population_data(country = None):
                 'population_rank': population_rank,
                 'density_rank': density_rank
             })
-            print(pop_year, population, density_km2, population_rank, density_rank)
+            # print(pop_year, population, density_km2, population_rank, density_rank)
         
         return {
             'historical_population': historical_population,
