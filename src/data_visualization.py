@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import pandas as pd
 import io
 
@@ -44,6 +45,7 @@ def plot_population_comparison_trends(dataframes, countries):
         
         # Disable scientific notation
         ax = plt.gca()  # Get the current axis
+        ax.yaxis.set_major_formatter(ticker.ScalarFormatter())
         ax.ticklabel_format(style='plain', axis='y')
 
         # Add commas to the y-axis labels
@@ -57,7 +59,7 @@ def plot_population_comparison_trends(dataframes, countries):
             # Plot the population value for 2024
             plt.scatter(2024, population_2024, color='red', zorder=5)  # Dot on the line
 
-    plt.title('Population Projection by Year')
+    plt.title('Comparison Population Projection by Year')
     plt.xlabel('Year')
     plt.ylabel('Population')
     plt.grid(True)
