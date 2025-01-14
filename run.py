@@ -5,6 +5,7 @@ from src.database_psql.data_operations import countries as country_table
 from src import data_visualization as dv_plot
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 app = Flask(__name__)
 plt.switch_backend('Agg')
@@ -74,4 +75,11 @@ def population_chart():
     return send_file(buf, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    env = os.getenv('ENVIRONMENT', 'development')  # Default to 'development' if not set
+
+    if env == 'development':
+        app.run()  # dev
+    elif env == 'production':
+        app.run(host='0.0.0.0', port=10000, debug=True)  # prod
+    else:
+        raise ValueError(f"Invalid FLASK_ENV value: {env}. Must be 'development' or 'production'.")
