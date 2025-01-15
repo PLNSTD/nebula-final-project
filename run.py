@@ -100,7 +100,7 @@ def scrape_and_store_cities():
         return jsonify({'Error': str(e)}), 500
 
 @app.route('/scrape_and_store/population', methods=['GET'])
-def scrape_and_store_population():
+def scrape_and_store_population_charts():
     try:
         scraper.fill_db_with_country_pop_projections()
         return jsonify({'message': 'Population projections data scraped, processed and stored successfully!'})
