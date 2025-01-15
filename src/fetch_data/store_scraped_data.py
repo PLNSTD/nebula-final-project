@@ -9,8 +9,6 @@ from src.database_psql.data_operations import cities as cities_table
 from src.database_psql.data_operations import historical_population as historical_pop_table
 from src.database_psql.data_operations import projections_population as projections_pop_table
 import os
-from src.data_visualization import plot_population_trends as ppt
-import pandas as pd
 
 def fill_db_with_continents():
     create_tables.setup_continents()
@@ -195,22 +193,3 @@ def fill_db_with_country_pop_projections():
             # print(year, country_population, density_km2, population_rank, density_rank)
         
         cntCountries += 1
-
-# fill_db_with_continents()
-# fill_db_with_countries()
-# fill_db_with_cities()
-# fill_db_with_country_pop_projections() # TODO
-# data = projections_pop_table.get_by_country('India')
-# df = pd.DataFrame(data)
-'''projections_df = projections_pop_table.get_by_country_to_dataframe('Italy')
-historical_df = historical_pop_table.get_by_country_to_dataframe('Italy')
-
-df_combined = pd.concat([
-    projections_df[['population_year', 'population']],
-    historical_df[['population_year', 'population']]
-], ignore_index=True)
-
-df_combined = df_combined.drop_duplicates(subset='population_year', keep='first').sort_values(by='population_year')
-
-print(df_combined)
-ppt(df_combined)'''
